@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smooth Scroll Animation</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader" class="preloader">
+    <div class="progress-bar-container">
+      <div id="progress-bar" class="progress-bar"></div>
+    </div>
+  </div>
+
+  <!-- FIXED canvas — never moves, always fills screen -->
+  <canvas id="animation-canvas"></canvas>
+
+  <!-- Spacer — creates scroll depth so browser has room to scroll -->
+  <div class="spacer"></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
