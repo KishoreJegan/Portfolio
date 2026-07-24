@@ -3,28 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kishore Jegan - Portfolio</title>
-  <link rel="stylesheet" href="/src/style.css" />
+  <title>Kishore Jegan — Portfolio</title>
+  <meta name="description" content="Portfolio of Kishore Jegan — scroll-driven visual storytelling with frame-by-frame animation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 </head>
-<body>
-
-  <div id="scrollContainer" style="height: 300vh; position: relative;">
-    <div style="position: sticky; top: 0; height: 100vh; overflow: hidden;">
-      <video id="scrollVideo" muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
-        <source src="https://github.com/KishoreJegan/Portfolio/releases/download/v1.0/Output_1.mp4" type="video/mp4">
-      </video>
-      <div class="overlay-text">
-        <h2>Project Name</h2>
-        <p>Brief description of the work.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="social-links">
-    <a href="https://github.com/KishoreJegan" target="_blank" rel="noopener noreferrer">GitHub</a>
-    <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-  </div>
-
-  <script type="module" src="/src/main.js"></script>
+<body class="bg-black text-white selection:bg-white/10 selection:text-white">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
