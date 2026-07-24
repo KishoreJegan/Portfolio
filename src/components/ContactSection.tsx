@@ -13,22 +13,31 @@ export const ContactSection: React.FC = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email) return;
+    if (!name || !email || isSubmitting) return;
 
-    const subject = encodeURIComponent(`Message from ${name} via Portfolio`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-    window.open(`mailto:kishorejegan.79@gmail.com?subject=${subject}&body=${body}`, '_blank');
-
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setName('');
-      setEmail('');
-      setMessage('');
-      setIsSubmitted(false);
-    }, 4000);
+    setIsSubmitting(true);
+    try {
+      const res = await fetch('https://formspree.io/f/xeeypjkz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      });
+      if (res.ok) {
+        setIsSubmitted(true);
+        setTimeout(() => {
+          setName('');
+          setEmail('');
+          setMessage('');
+          setIsSubmitted(false);
+        }, 5000);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -75,7 +84,7 @@ export const ContactSection: React.FC = () => {
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Message Sent!</h3>
               <p className="text-xs sm:text-sm text-white/70 max-w-sm font-light">
-                Thank you, <span className="text-white font-medium">{name || 'there'}</span>. Your email client has been opened to send your message directly to <span className="text-white/90">kishorejegan.79@gmail.com</span>.
+                Thank you, <span className="text-white font-medium">{name || 'there'}</span>! Your message has been sent to <span className="text-white/90">kishorelinganj@gmail.com</span>. I'll get back to you soon.
               </p>
             </motion.div>
           ) : (
@@ -135,10 +144,20 @@ export const ContactSection: React.FC = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full py-3.5 px-6 rounded-xl bg-white text-black font-bold text-xs sm:text-sm hover:bg-white/90 transition-all duration-200 shadow-[0_10px_30px_rgba(255,255,255,0.25)] flex items-center justify-center gap-2 group cursor-pointer"
+                disabled={isSubmitting}
+                className="w-full py-3.5 px-6 rounded-xl bg-white text-black font-bold text-xs sm:text-sm hover:bg-white/90 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 shadow-[0_10px_30px_rgba(255,255,255,0.25)] flex items-center justify-center gap-2 group cursor-pointer"
               >
-                <Send className="w-4 h-4 text-black group-hover:translate-x-0.5 transition-transform" />
-                <span>Send Message to Email</span>
+                {isSubmitting ? (
+                  <>
+                    <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg>
+                    <span>Sending…</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4 text-black group-hover:translate-x-0.5 transition-transform" />
+                    <span>Send Message</span>
+                  </>
+                )}
               </button>
             </form>
           )}
